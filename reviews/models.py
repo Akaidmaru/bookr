@@ -3,7 +3,7 @@ from django.contrib import auth
 
 
 class Publisher(models.Model):
-    """A company that pblished."""
+    """A company that published."""
     name = models.CharField(max_length=50, help_text="The name of the Publisher.")
     website = models.URLField(help_text="The Publisher's website.")
     email = models.EmailField(help_text="The Publisher's email address.")
