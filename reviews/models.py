@@ -21,7 +21,12 @@ class Book(models.Model):
     contributors = models.ManyToManyField('Contributor', through="BookContributor")
 
     def __str__(self):
-        return self.title
+        return f"{self.title} ({self.isbn})"
+
+    def isbn13(self):
+        """ '9780316769174' => '978-0-31-676917-4' """
+        return f"{self.isbn[0:3]}-{self.isbn[3:4]}-{self.isbn[4:6]}" \
+               f"-{self.isbn[6:12]}-{self.isbn[12:13]}"
 
 
 class Contributor(models.Model):
