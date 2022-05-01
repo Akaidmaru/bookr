@@ -21,14 +21,15 @@ class BookAdmin(admin.ModelAdmin):
 #        return f"{obj.isbn[0:3]}-{obj.isbn[3:4]}-{obj.isbn[4:6]}-{obj.isbn[6:12]}-{obj.isbn[12:13]}"
 
 
-def initialled_name(obj):
-    """obj.first_names='Jerome David', obj.last_names='Salinger' => 'Salinger, JD'"""
-    initials = ''.join([name[0] for name in obj.first_names.split(' ')])
-    return f"{obj.last_names}, {initials}"
-
+# def initialled_name(obj):
+#     """obj.first_names='Jerome David', obj.last_names='Salinger' => 'Salinger, JD'"""
+#     initials = ''.join([name[0] for name in obj.first_names.split(' ')])
+#     return f"{obj.last_names}, {initials}"
 
 class ContributorAdmin(admin.ModelAdmin):
-    list_display = (initialled_name, )
+    list_display = ('last_names', 'first_names')
+    list_filter = ('last_names',)
+    search_fields = ('last_names__startswith', 'first_names')
 
 
 class ReviewAdmin(admin.ModelAdmin):
