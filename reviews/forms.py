@@ -1,4 +1,5 @@
 from django import forms
+from .models import Publisher
 
 SEARCH_CHOICES = (
     ("title", "Title"),
@@ -11,4 +12,10 @@ class SearchForm(forms.Form):
     by Title or Contributor, and neither of them is required for the form to work. By default, search is set
     to search_in by Title."""
     search = forms.CharField(min_length=3, required=False)
-    search_in = forms.ChoiceField(choices=SEARCH_CHOICES, default='title', required=False)
+    search_in = forms.ChoiceField(choices=SEARCH_CHOICES, required=False)
+
+
+class PublisherForm(forms.ModelForm):
+    class Meta:
+        model = Publisher
+        fields = "__all__"

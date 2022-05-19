@@ -1,7 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 
-from .models import Book
+from .models import Book, Contributor, Publisher
 from .utils import average_rating
+from .forms import PublisherForm, SearchForm
 
 
 def index(request):
@@ -10,7 +12,27 @@ def index(request):
 
 def book_search(request):
     search_text = request.GET.get("search", "")
-    return render(request, "reviews/search-results.html", {"search_text": search_text})
+    form = SearchForm(request.GET)
+    books = set()
+    if form.is_valid() and form.cleaned_data['search']:
+        search = form.cleaned_data["search"]
+        search_in = form.cleaned_data.get("search_in") or "title"
+        if search_in == "title":
+            books = Book.objects.filter(title__icontains=search)
+        else:
+            fname_contributors = Contributor.objects.filter(first_names__icontains=search)
+
+            for contributor in fname_contributors:
+                for book in contributor.book_set.all():
+                    books.add(book)
+
+            lname_contributors = Contributor.objects.filter(last_names__icontains=search)
+
+            for contributor in lname_contributors:
+                for book in contributor.book_set.all():
+                    books.add(book)
+
+    return render(request, "search_result.html", {"form": form, "search_text": search_text, "books": books})
 
 
 def book_list(request):
@@ -44,3 +66,23 @@ def book_details(request, id):
         context = {"book": book, "book_rating": None, "reviews": reviews}
 
     return render(request, 'reviews/book_details.html', context)
+
+
+def publisher_edit(request, pk=None):
+    if pk is not None:
+        publisher = get_object_or_404(Publisher, pk=pk)
+    else:
+        publisher = None
+    if request.method == "POST":
+        form = PublisherForm(request.POST, instance=publisher)
+        if form.is_valid():
+            updated_publisher = form.save()
+        if publisher is None:
+            messages.success(request, f"Publisher '{updated_publisher}' was created.".format(updated_publisher))
+        else:
+            messages.success(request, f"Publisher '{updated_publisher}' was updated.".format(updated_publisher))
+        return redirect("publisher_edit", updated_publisher.pk)
+    else:
+        form = PublisherForm(instance=publisher)
+    return render(request, "reviews/instance-form.html", {
+        "form": form, "instance": publisher, "model_type": "Publisher"})
