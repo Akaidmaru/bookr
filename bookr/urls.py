@@ -1,12 +1,14 @@
 from django.contrib import admin
 from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
 
 # import reviews.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('reviews.urls')),
-
-    # path('', reviews.views.index),
-    # path('book-search', reviews.views.book_search)
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

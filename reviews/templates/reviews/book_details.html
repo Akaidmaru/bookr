@@ -4,12 +4,19 @@
     <br>
     <h3>Book Details</h3>
     <hr>
+        {% if book.cover %}
+        <img src="{{ book.cover.url }}"/>
+        <br/>
+        {% endif %}
         <span class="text-info">Title: </span> <span>{{ book.title }}</span>
-        <br>
+        <br/>
         <span class="text-info">Publisher: </span> <span>{{ book.publisher }}</span>
-        <br>
+        <br/>
         <span class="text-info">Publication date: </span> <span>{{ book.publication_date }}</span>
-        <br>
+        <br/>
+        {% if book.sample %}
+        Sample: <a href="{{ book.sample.url }}">Download</a>
+        {% endif %}
         {% if not reviews %}
             <hr>
             <h3>Be the first one to write a review.</h3>
@@ -37,5 +44,6 @@
             </ul>
         {% endif %}
     <a href="{% url 'review_create' book.pk %}" class="btn btn-primary">Add Review</a>
+    <a href="{% url 'book_media' book.pk %}" class="btn btn-primary">Media</a>
 
 {% endblock %}

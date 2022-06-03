@@ -19,6 +19,8 @@ class Book(models.Model):
     isbn = models.CharField(max_length=20, verbose_name="ISBN numbers of the book.")
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
     contributors = models.ManyToManyField('Contributor', through="BookContributor")
+    cover = models.ImageField(upload_to='book_covers/', null=True, blank=True)
+    sample = models.FileField(upload_to='book_samples/', null=True, blank=True)
 
     def __str__(self):
         return f"{self.title} ({self.isbn})"
@@ -63,3 +65,6 @@ class Review(models.Model):
     date_edited = models.DateField(null=True, help_text="The date and time the review was last edited.")
     creator = models.ForeignKey(auth.get_user_model(), on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, help_text="The Book that this reviews is for.")
+
+    def __str__(self):
+        return f"{self.creator.username} - {self.book.title}"
