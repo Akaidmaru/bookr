@@ -500,3 +500,5 @@ reviews/migrations/
 .idea/vcs.xml
 
 .idea/
+
+sqlite3.exe
