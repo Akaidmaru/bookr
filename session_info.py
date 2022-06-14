@@ -18,7 +18,7 @@ def get_session_dictionary(session_index):
 
 
 if __name__ == '__main__':
-    if len(sys.argv)>1:
+    if len(sys.argv) > 1:
         session_index = sys.argv[1]
         session_dictionary = get_session_dictionary(session_index)
         pp = pprint.PrettyPrinter(indent=4)
