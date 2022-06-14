@@ -73,6 +73,16 @@ def book_details(request, id):
     else:
         context = {"book": book, "book_rating": None, "reviews": reviews}
 
+    if request.user.is_authenticated:
+        max_viewed_books_length = 10
+        viewed_books = request.session.get('viewed_books', [])
+        viewed_book = [book.id, book.title]
+        if viewed_book in viewed_books:
+            viewed_books.pop(viewed_books.index(viewed_book))
+        viewed_books.insert(0, viewed_book)
+        viewed_books = viewed_books[:max_viewed_books_length]
+        request.session['viewed_books'] = viewed_books
+
     return render(request, 'reviews/book_details.html', context)
 
 # @permission_required('edit_publisher')
