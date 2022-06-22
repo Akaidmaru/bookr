@@ -1,8 +1,9 @@
-from django.contrib import admin
+# from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 from bookr.views import profile
+from django.contrib import admin
 
 # import reviews.views
 
@@ -11,6 +12,7 @@ urlpatterns = [
     path('accounts/profile/', profile, name='profile'),
     path('admin/', admin.site.urls),
     path('', include('reviews.urls')),
+
 ]
 
 if settings.DEBUG:
