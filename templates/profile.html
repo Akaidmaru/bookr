@@ -35,16 +35,31 @@
       Last Login: {{ request.user.last_login }}<br/>
     </p>
   </div>
-    <div class="infocell">
-      <p>Viewed Books</p>
-      <p>
+
+  <div class="infocell">
+    <p>Viewed Books</p>
+    <p>
       {% for book_id, book_title in request.session.viewed_books %}
         <a href="/book/{{ book_id }}/">{{ book_title }}</a></br>
       {% empty %}
         No recently viewed books found.
       {% endfor %}
-      </p>
-    </div>
+    </p>
+
+  </div>
+
+  <div class="infocell">
+    <p>Search History</p>
+    <p>
+      {% for search_in, search_text in request.session.search_history %}
+        <a href="/book_search?search={{ search_text }}&search_in={{ search_in }}/">
+          {{ search_text }} ({{ search_in }})
+        </a></br>
+      {% empty %}
+        No recently viewed books found.
+      {% endfor %}
+    </p>
+  </div>
 
 </div>
 
