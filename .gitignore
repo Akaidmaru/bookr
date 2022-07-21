@@ -502,3 +502,9 @@ reviews/migrations/
 .idea/
 
 sqlite3.exe
+
+book_management/__init__.py
+
+book_management/migrations/__init__.py
+
+book_management/migrations/0001_initial.py
