@@ -37,14 +37,16 @@ class Contributor(models.Model):
     last_names = models.CharField(max_length=50, help_text="The contributor's last name or names.")
     email = models.EmailField(help_text="The contact email for the contributor.")
 
-# This method is replaced by the one below, since that one returns the name of the contributor.
-#    def __str__(self):
-#        return self.first_names
-
     def initialled_name(self):
         """self.first_names='Jerome David', self.last_names='Salinger' => 'Salinger, JD'"""
         initials = ''.join([self.name[0] for self.name in self.first_names.split(' ')])
         return f"{self.last_names}, {initials}"
+
+    def __str__(self):
+        return self.initialled_name()
+
+    def number_contributions(self):
+        return self.bookcontributor_set.count()
 
 
 class BookContributor(models.Model):
@@ -56,6 +58,9 @@ class BookContributor(models.Model):
     contributor = models.ForeignKey(Contributor, on_delete=models.CASCADE)
     role = models.CharField(verbose_name="The role this contributor had in the book.",
                             choices=ContributionRole.choices, max_length=20)
+
+    def __str__(self):
+        return f'{self.book} | {self.contributor} ({self.role})'
 
 
 class Review(models.Model):
