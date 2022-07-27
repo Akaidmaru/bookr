@@ -17,5 +17,6 @@ urlpatterns = [
     path('books/<int:book_pk>/media', views.book_media, name='book_media'),
     path('publishers/<int:pk>/', views.publisher_edit, name='publisher_edit'),
     path('publishers/new/', views.publisher_edit, name='publisher_create'),
-    path('api/', include((router.urls, 'api')))
+    path('api/', include((router.urls, 'api'))),
+    path('api/login', api_views.Login.as_view(), name='login')
     ]
