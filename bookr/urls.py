@@ -1,7 +1,8 @@
-# from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
+
+import bookr.views
 from bookr.views import profile
 from django.contrib import admin
 
@@ -14,6 +15,7 @@ urlpatterns = [
     path('', include('reviews.urls')),
     path('filter_demo/', include('filter_demo.urls')),
     path('book_management/', include('book_management.urls')),
+    path('accounts/profile/reading_history', bookr.views.reading_history, name='reading_history'),
 
 ]
 

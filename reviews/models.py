@@ -28,7 +28,7 @@ class Book(models.Model):
     def isbn13(self):
         """ '9780316769174' => '978-0-31-676917-4' """
         return f"{self.isbn[0:3]}-{self.isbn[3:4]}-{self.isbn[4:6]}" \
-               f"-{self.isbn[6:12]}-{self.isbn[12:13]}"
+            f"-{self.isbn[6:12]}-{self.isbn[12:13]}"
 
 
 class Contributor(models.Model):
@@ -56,8 +56,7 @@ class BookContributor(models.Model):
         EDITOR = "EDITOR", "Editor"
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     contributor = models.ForeignKey(Contributor, on_delete=models.CASCADE)
-    role = models.CharField(verbose_name="The role this contributor had in the book.",
-                            choices=ContributionRole.choices, max_length=20)
+    role = models.CharField(verbose_name="The role this contributor had in the book.", choices=ContributionRole.choices, max_length=20)
 
     def __str__(self):
         return f'{self.book} | {self.contributor} ({self.role})'
