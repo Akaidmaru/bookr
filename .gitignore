@@ -510,3 +510,5 @@ book_management/migrations/__init__.py
 book_management/migrations/0001_initial.py
 
 bookr_test/migrations/
+
+bookr_test/__init__.py
