@@ -16,6 +16,7 @@ urlpatterns = [
     path('filter_demo/', include('filter_demo.urls')),
     path('book_management/', include('book_management.urls')),
     path('accounts/profile/reading_history', bookr.views.reading_history, name='reading_history'),
+    path('', include('bookr_test.urls'))
 
 ]
 
